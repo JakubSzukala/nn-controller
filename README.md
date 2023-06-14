@@ -1,5 +1,9 @@
 To run the node:
 ```bash
+# Install stable baselines 3 dependency, preferably version 1.8.0
+$ pip3 install stable-baselines3==1.8.0
+
+# Launch all the infrastructure
 $ ros2 launch f1tenth_launch f1tenth.launch.py
 
 # In separate terminal run a test environment
