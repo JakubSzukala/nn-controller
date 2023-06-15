@@ -10,9 +10,9 @@ from autoware_auto_control_msgs.msg import AckermannControlCommand
 class NNControllerNode(Node):
     def __init__(self):
         super().__init__('nn_controller')
-        
+
         # Load model and extract policy
-        self.model_path = 'models/best_model.zip'
+        self.model_path = 'src/nn_controller/models/best_model.zip'
         model = PPO.load(self.model_path)
         self.policy = model.policy
         del model
@@ -39,12 +39,12 @@ class NNControllerNode(Node):
 
         # Testing purposes
         #self.timer = self.create_timer(1, self.timer_callback)
-    
+
     def control_callback(self, msg: LaserScan):
         self.get_logger().info("Received laser scan")
         observations = np.array(msg.ranges)
         observations = observations / msg.range_max # Normalize
-        # Filter infs and -infs 
+        # Filter infs and -infs
         mask = np.isin(observations, np.inf)
         observations[mask] = msg.range_max
         mask = np.isin(observations, [-np.inf, np.nan])
@@ -59,7 +59,7 @@ class NNControllerNode(Node):
 
         console_log = "Actions taken: {}, {}".format(action[0][0], action[0][1])
         self.get_logger().info(console_log)
-        
+
         # Act
         control_msg = AckermannControlCommand()
         control_msg.longitudinal.acceleration = float(action[0][0])
