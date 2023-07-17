@@ -37,8 +37,6 @@ class NNControllerNode(Node):
             )
         )
 
-        # Testing purposes
-        #self.timer = self.create_timer(1, self.timer_callback)
 
     def control_callback(self, msg: LaserScan):
         self.get_logger().info("Received laser scan")
@@ -49,11 +47,10 @@ class NNControllerNode(Node):
         observations[mask] = msg.range_max
         mask = np.isin(observations, [-np.inf, np.nan])
         observations[mask] = 0
-        #print(observations)
 
-        # TEST
-        #observations = np.zeros(len(msg.ranges))
+        # Reverse order
         observations = observations[::-1]
+
         # Predict
         action = self.policy.predict(observations, deterministic=True)
 
@@ -65,13 +62,6 @@ class NNControllerNode(Node):
         control_msg.longitudinal.acceleration = float(action[0][0])
         control_msg.lateral.steering_tire_angle = float(action[0][1])
 
-        self.publisher.publish(control_msg)
-
-
-    def timer_callback(self):
-        control_msg = AckermannControlCommand()
-        control_msg.lateral.steering_tire_angle = -0.1
-        control_msg.longitudinal.acceleration = 1.0
         self.publisher.publish(control_msg)
 
 
