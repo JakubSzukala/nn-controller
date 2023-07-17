@@ -1,3 +1,10 @@
+# NN controller
+ROS2 node that performs inference with trained model to control a toy car in a [simulation](https://github.com/amadeuszsz/AWSIM/tree/v1.1.0_f1tenth).
+
+#### Description
+The node expects model to be trained and exported with Stable Baselines 3. Model is fed distance measurements subscribed from the car's lidar sensor topic and performs inference returning wheels' turn angle and acceleration that then is published to /control/command/control_cmd topic.
+
+#### Usage
 To run the node:
 ```bash
 # Install stable baselines 3 dependency, preferably version 1.8.0
