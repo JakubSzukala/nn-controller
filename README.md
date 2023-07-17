@@ -1,5 +1,5 @@
 # NN controller
-ROS2 node that performs inference with trained model to control a toy car in a [simulation](https://github.com/amadeuszsz/AWSIM/tree/v1.1.0_f1tenth).
+ROS2 node that performs inference with trained model to control a toy car in a [simulation](https://github.com/amadeuszsz/AWSIM/tree/v1.1.0_f1tenth). It's intended use is with a model trained in [this](https://github.com/JakubSzukala/self-driving-car-simulator) environment.
 
 #### Description
 The node expects model to be trained and exported with Stable Baselines 3. Model is fed distance measurements subscribed from the car's lidar sensor topic and performs inference returning wheels' turn angle and acceleration that then is published to /control/command/control_cmd topic.
